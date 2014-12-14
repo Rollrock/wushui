@@ -1,0 +1,76 @@
+{
+    "info": [
+        {
+            "imageUrl": "guide_dfmzt.png",
+            "title": "东方明珠塔",
+            "desc": "东方明珠塔是上海电视台发射塔，位于黄浦江东岸！",
+            "detailUrl": "dfmzt_info.txt"
+        },
+        {
+            "imageUrl": "guide_xtd.png",
+            "title": "新天地",
+            "desc": "新天地是最具有上海中外文化特色的地点，内有很多的酒吧、夜晚的灯光璀璨！",
+            "detailUrl": "xtd_info.txt"
+        },
+        {
+            "imageUrl": "guide_sjgy.png",
+            "title": "世纪公园",
+            "desc": "世纪公园新天地是最具有上海中外文化特色的地点，内有很多的酒吧、夜晚的灯光璀璨！",
+            "detailUrl": "sjgy_info.txt"
+        },
+        {
+            "imageUrl": "guide_sjgy.png",
+            "title": "田子坊",
+            "desc": "田子坊世纪公园新天地是最具有上海中外文化特色的地点，内有很多的酒吧、夜晚的灯光璀璨！",
+            "detailUrl": "tzf_info.txt"
+        },
+        {
+            "imageUrl": "guide_shkjg.png",
+            "title": "上海科技馆",
+            "desc": "上海科技馆是上海重要的科普教育基地和休闲旅游基地。上海科技馆项目占地面积6.8万多平方米，总建筑面积9.8万平方米",
+            "detailUrl": "shkjg_info.txt"
+        },
+        {
+            "imageUrl": "guide_qbgz.png",
+            "title": "七宝古镇",
+            "desc": "七宝古镇既有江南水乡自然风光，又有悠久人文内涵的历史古镇",
+            "detailUrl": "qbgz_info.txt"
+        },
+        {
+            "imageUrl": "guide_njdl.png",
+            "title": "南京东路",
+            "desc": "南京东路是上海十大商业中心之一,作为上海绝对的“黄金地段”，它也是经营者必争之地，旅游者必到之处",
+            "detailUrl": "njdl_info.txt"
+        },
+        {
+            "imageUrl": "guide_zjj.png",
+            "title": "朱家角",
+            "desc": "朱家角历史悠久，旅游资源丰富，被列为上海四大历史文化名镇之一，素有“上海威尼斯”及“沪郊好莱坞”之誉！",
+            "detailUrl": "zjj_info.txt"
+        },
+        {
+            "imageUrl": "guide_jjly.png",
+            "title": "锦江乐园",
+            "desc": "锦江乐园[1]是一座现代化的大型游乐园，有32种大型游乐设施，拥有国际先进的娱乐设备，好玩刺激，其乐无穷！",
+            "detailUrl": "jjly_info.txt"
+        },
+        {
+            "imageUrl": "guide_hqjlzx.png",
+            "title": "环球金融中心",
+            "desc": "上海环球金融中心是位于中国上海陆家嘴的一栋摩天大楼，是中国目前第三高楼、大陆第二高楼、世界第四高楼、世界最高的平顶式大楼！",
+            "detailUrl": "hqjlzx_info.txt"
+        },
+        {
+            "imageUrl": "guide_hhl.png",
+            "title": "淮海路",
+            "desc": "淮海路是上海最繁华的商业街之一，它与南京路齐名；淮海路表现为一种品位、一种风格，它是全上海公认的最美丽、最摩登、最有“腔调”和情调的一条街！",
+            "detailUrl": "hhl_info.txt"
+        },
+        {
+            "imageUrl": "guide_chm.png",
+            "title": "城隍庙",
+            "desc": "到上海不去城隍庙，等于没到过大上海。”可见老城隍庙在上海的地位和影响。一般意义上的上海城隍庙是指黄浦区的老城隍庙，在旅游景点中都称为“豫园”，即原上海县城隍庙，这是个著名的江南古典园林，全国重点文物保护单位。",
+            "detailUrl": "chm_info.txt"
+        }
+    ]
+}

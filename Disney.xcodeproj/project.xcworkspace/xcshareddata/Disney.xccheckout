@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D765FE74-5685-4C9A-8934-B9F0CA6B7965</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Disney</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BCAE74E39C2D2B0B688C45BB4DDF70A8B43BF90B</key>
+		<string>https://github.com/Rollrock/disney.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Disney.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BCAE74E39C2D2B0B688C45BB4DDF70A8B43BF90B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Rollrock/disney.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BCAE74E39C2D2B0B688C45BB4DDF70A8B43BF90B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BCAE74E39C2D2B0B688C45BB4DDF70A8B43BF90B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>disney</string>
+		</dict>
+	</array>
+</dict>
+</plist>

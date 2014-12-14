@@ -1,0 +1,16 @@
+{
+    "list": [
+        {
+            "url": "http://www.999dh.net/disney/about/adv1.html",
+            "title": "今日”股指大涨黑马推荐"
+        },
+        {
+            "url": "http://www.999dh.net/disney/about/adv2.html",
+            "title": "纯种”藏獒低价销售"
+        },
+        {
+            "url": "http://www.999dh.net/disney/about/adv3.html",
+            "title": "黄金走低最佳入手机会"
+        }
+    ]
+}
