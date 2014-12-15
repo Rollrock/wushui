@@ -36,4 +36,7 @@
 @property(nonatomic,copy) NSString * userId;
 
 
+-(NSString*)getDeviceid;
+
+
 @end

@@ -186,7 +186,7 @@
             pickView.layer.masksToBounds = YES;
             pickView.delegate = self;
             pickView.dataSource = self;
-            pickView.backgroundColor = [UIColor grayColor];
+            pickView.backgroundColor = [UIColor lightGrayColor];
             
             [_scrView addSubview:pickView];
 

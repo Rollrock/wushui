@@ -11,6 +11,7 @@
 #import "dataStruct.h"
 #import "ASIFormDataRequest.h"
 #import "JSONKit.h"
+#import "AppDelegate.h"
 
 
 #define STR_URL  @"http://115.159.30.191/water/json?"
@@ -74,11 +75,14 @@
 
 -(void)requestData
 {
+    AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
     _dataReq = [[ASIFormDataRequest alloc]initWithURL:[NSURL URLWithString:STR_URL]];
     
+    [_dataReq setPostValue:@"MB" forKey: @"channal"];
     [_dataReq setPostValue:@"BC0008" forKey:@"trancode"];
     [_dataReq setPostValue:_newsid forKey:@"newsid"];
-    [_dataReq setPostValue:@"aaaa" forKey:@"userId"];
+    [_dataReq setPostValue:appDel.userId forKey:@"userId"];
     
     _dataReq.delegate = self;
     [_dataReq startAsynchronous];

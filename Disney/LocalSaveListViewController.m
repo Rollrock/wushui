@@ -290,6 +290,12 @@
                 //
             }
             
+            {
+                NSUserDefaults * def = [NSUserDefaults standardUserDefaults];
+                [def setBool:YES forKey:SCORE_LIST_REFRESH];
+                [def synchronize];
+
+            }
             
             [SVProgressHUD showWithStatus:@"举报中成功~"];
             

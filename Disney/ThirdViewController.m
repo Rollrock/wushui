@@ -12,6 +12,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "ASIFormDataRequest.h"
 
+#import "AppDelegate.h"
 
 #import "MyWaitView.h"
 
@@ -111,18 +112,22 @@
     
     [self initTestData];
     
+    
     [self requestData];
     
 }
 
 -(void)requestData
 {
+    AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    
     _dataReq = [[ASIFormDataRequest alloc]initWithURL:[NSURL URLWithString:STR_URL]];
     
     [_dataReq setPostValue:@"MB" forKey: @"channal"];
-    [_dataReq setPostValue:@"123456" forKey: @"deviceid"];
+    [_dataReq setPostValue:[appDel getDeviceid] forKey: @"deviceid"];
     [_dataReq setPostValue:@"BC0007" forKey:@"trancode"];
-    [_dataReq setPostValue:@"20141203000001" forKey:@"userId"];
+    [_dataReq setPostValue:appDel.userId forKey:@"userId"];
     [_dataReq setPostValue:@"1" forKey:@"page"];
     [_dataReq setPostValue:@"10" forKey:@"pageNum"];
     
