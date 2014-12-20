@@ -19,7 +19,7 @@
 #import "SDWebImageManager.h"
 #import "EGOImageView.h"
 
-@interface MainViewController ()<tabbarViewDelegate,UIScrollViewDelegate,SDWebImageManagerDelegate,EGOImageViewDelegate>
+@interface MainViewController ()<tabbarViewDelegate,UIScrollViewDelegate,SDWebImageManagerDelegate,EGOImageViewDelegate,NSURLConnectionDelegate>
 {
     BMKMapView * _mapView;
     
@@ -35,6 +35,12 @@
     UIImageView * _tempImgView;
     
     int _imageCount;
+    
+    //
+    NSMutableArray * _connArray;
+    NSMutableArray * _dataArray;
+    NSMutableArray * _imgViewArray;
+    
 }
 @end
 
@@ -69,21 +75,9 @@
     {
         rect = CGRectMake(0,  [[UIScreen mainScreen] bounds].size.height -STATUS_BAR_HEIGHT-CUSTOM_TAB_BAR_HEIGHT-20, 320, CUSTOM_TAB_BAR_HEIGHT);
     }
-    
-    
-    /*
-    NSUserDefaults * def = [NSUserDefaults standardUserDefaults ];
-    
-    if( ![def boolForKey:@"loadEd"] )
-    {
-        [self initWelcomeView];
-        return;
-    }
-     */
-    
-    
 
 
+    //
     _tabbarView = [[tabbarView alloc]initWithFrame:rect];
     
     _tabbarView.delegate = self;
@@ -100,21 +94,29 @@
     _tempImgView.image = [UIImage imageNamed:@"Default"];
     
     [self.view addSubview:_tempImgView];
-    
-    
 }
 
 
 -(void)updateWelcomeView
 {
-    [self requestAdvData];
+    NSLog(@"updateWelcomeView");
+    
+    //
+    static BOOL bFlag = NO;
     
     [self initWelcomeView];
+    
+    //兼容机制   如果下载没有成功  过30秒之后就直接进入界面
+    [NSTimer scheduledTimerWithTimeInterval:30.0f target:self selector:@selector(removeWelComeView) userInfo:nil repeats:NO];
+    
+   // bFlag = YES;
 }
 
 -(void)requestAdvData
 {
-    [SVProgressHUD showWithStatus:@"加载中，请稍等..."];
+    //[SVProgressHUD showWithStatus:@"加载中，请稍等..."];
+    
+    NSLog(@"requestAdvData");
     
     AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
@@ -151,7 +153,6 @@
         
         if( [strCode isEqualToString:@"00000"] )
         {
-   
             NSArray * array  = [[dict objectForKey:@"content"] objectForKey:@"ads"];
             
             if( [array isKindOfClass:[NSArray class]] )
@@ -164,11 +165,14 @@
                 [self showAdvView:imgUrl];
                 
                 NSLog(@"imgUrl:%@--openUrl:%@",imgUrl,_webUrl);
+                
+                [SVProgressHUD dismiss];
+                
+                return;
             }
         }
     }
     
-    [self dismissTipView:@"加载失败"];
 }
 
 
@@ -218,18 +222,17 @@
         
         [_advImgView setImageWithURL:[NSURL URLWithString:imgUrl]];
         
-        
-        //
-        
         //
         
         _advImgView.userInteractionEnabled = YES;
         rect = CGRectMake(270, 5, 40, 40);
         UIButton * btn = [[[UIButton alloc]initWithFrame:rect]autorelease];
         btn.backgroundColor = [UIColor whiteColor];
+        btn.layer.cornerRadius = 20;
+        btn.layer.masksToBounds = YES;
         [_advImgView addSubview:btn];
         [btn addTarget:self action:@selector(hideAdv) forControlEvents:UIControlEventTouchUpInside];
-        
+        [btn setBackgroundImage:[UIImage imageNamed:@"closeAdv"] forState:UIControlStateNormal];
         UITapGestureRecognizer * g = [[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openWeb)]autorelease];
         [_advImgView addGestureRecognizer:g];
     }
@@ -255,32 +258,113 @@
 
 }
 
-- (void)imageViewLoadedImage:(EGOImageView*)imageView
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"loadedImage");
+    //把每次得到的数据依次放到数组中，这里还可以自己做一些进度条相关的效果
     
-    _imageCount ++;
+    NSLog(@"didReceiveData");
     
-    if( _imageCount == [self.imgUrlArray count] )
+    for( int i = 0; i < [_connArray count]; ++ i )
     {
-        [_tempImgView removeFromSuperview];
+        if( connection == [_connArray objectAtIndex:i] )
+        {
+            NSMutableData * d = [_dataArray objectAtIndex:i];
+            [d appendData:data];
+            break;
+        }
     }
 }
 
-- (void)imageViewFailedToLoadImage:(EGOImageView*)imageView error:(NSError*)error
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"NSError error");
+    NSLog(@"didFailWithError");
+    
+    [self removeWelComeView];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    for( int i = 0; i < [_connArray count]; ++ i )
+    {
+        if( connection == [_connArray objectAtIndex:i] )
+        {
+            UIImage *image = [[UIImage alloc] initWithData:[_dataArray objectAtIndex:i]];
+            
+            UIImageView * imgView = [_imgViewArray objectAtIndex:i];
+            imgView.image = image;
+            break;
+        }
+    }
+    
+    _imageCount++;
+    
+    if([self.imgUrlArray count] == _imageCount )
+    {
+        [_tempImgView removeFromSuperview];
+        _tempImgView = nil;
+    }
+}
+
+-(void)removeWelComeView
+{
+   static BOOL bFlag = NO;
+
+    
+    if( !bFlag )
+    {
+        NSLog(@"removeWelComeView");
+        
+        if( scrollView )
+        {
+            [scrollView removeFromSuperview];
+            scrollView = nil;
+        }
+        
+        if( _tempImgView )
+        {
+            [_tempImgView removeFromSuperview];
+            _tempImgView = nil;
+        }
+
+        
+        
+        [self requestAdvData];
+        
+        bFlag = YES;
+    }
+
 }
 
 
 -(void)initWelcomeView
 {
+    if( [self.imgUrlArray count] == 0 )
+    {
+        [self removeWelComeView];
+        return;
+    }
+    
+    //
     UIScrollView *uiScrollview = [[[UIScrollView alloc] init]autorelease];
     uiScrollview.frame = self.view.bounds;
     CGFloat width = self.view.frame.size.width;
     CGFloat height = self.view.frame.size.height;
     
-    //[self.view addSubview:uiScrollview];
+    //
+    _imgViewArray = [[NSMutableArray alloc]initWithCapacity:1];
+    _dataArray = [[NSMutableArray alloc]initWithCapacity:1];
+    _connArray = [[NSMutableArray alloc]initWithCapacity:1];
+    
+    
+    for( int i = 0; i < [self.imgUrlArray count]; ++ i )
+    {
+        NSMutableData * data = [[[NSMutableData alloc]init]autorelease];
+        
+        [_dataArray addObject:data];
+    }
+    
+    //
     
     [self.view insertSubview:uiScrollview belowSubview:_tempImgView];
     
@@ -288,18 +372,28 @@
     {
         CGRect rect = CGRectMake(i*width, 0, width, height);
         
-        EGOImageView * imageView = [[[EGOImageView alloc]initWithFrame:rect]autorelease];
-        imageView.imageURL = [NSURL URLWithString:[self.imgUrlArray objectAtIndex:i]];
-        imageView.delegate = self;
+        UIImageView * imageView = [[[UIImageView alloc] initWithFrame:rect]autorelease];
         [uiScrollview addSubview:imageView];
+        [_imgViewArray addObject:imageView];
+        
+        
+        NSURLRequest * req = [NSURLRequest requestWithURL:[NSURL URLWithString:[self.imgUrlArray objectAtIndex:i]]];
+        
+        NSURLConnection * conn = [[[NSURLConnection alloc] initWithRequest:req delegate:self]autorelease];
+        
+        [_connArray addObject:conn];
+        //
         
         if( i == [self.imgUrlArray count]-1 )
         {
-            CGRect rect = CGRectMake(100, 300, 100, 40);
+            CGRect rect = CGRectMake(120, 300, 100, 40);
             UIButton * btn = [[[UIButton alloc]initWithFrame:rect]autorelease];
             
             btn.backgroundColor = [UIColor grayColor];
             [btn setTitle:@"点击进入" forState:UIControlStateNormal];
+            btn.layer.cornerRadius = 5;
+            btn.layer.masksToBounds = YES;
+            btn.backgroundColor = [UIColor orangeColor];
             [btn addTarget: self action:@selector(skip) forControlEvents:UIControlEventTouchUpInside];
             imageView.userInteractionEnabled = YES;
             [imageView addSubview:btn];
@@ -327,7 +421,12 @@
 -(void)skip
 {
     
-    [scrollView removeFromSuperview];
+    NSUserDefaults * def = [NSUserDefaults standardUserDefaults];
+    [def setObject:_updateDate forKey:@"update"];
+    [def synchronize];
+    
+    //
+    [self removeWelComeView];
     
     //
     CGRect rect;

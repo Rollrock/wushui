@@ -57,6 +57,8 @@
 		486A23291A447ABA00B3A2DA /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 486A23201A447ABA00B3A2DA /* EGOImageLoadConnection.m */; };
 		486A232A1A447ABA00B3A2DA /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 486A23221A447ABA00B3A2DA /* EGOImageLoader.m */; };
 		486A232B1A447ABA00B3A2DA /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 486A23251A447ABA00B3A2DA /* EGOImageView.m */; };
+		486A232D1A458E5800B3A2DA /* closeAdv.png in Resources */ = {isa = PBXBuildFile; fileRef = 486A232C1A458E5800B3A2DA /* closeAdv.png */; };
+		486A232F1A45A47C00B3A2DA /* aboutBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 486A232E1A45A47C00B3A2DA /* aboutBg@2x.png */; };
 		4878DB80197FF669000C8868 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4878DB7F197FF669000C8868 /* Security.framework */; };
 		4878DB82197FF678000C8868 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4878DB81197FF678000C8868 /* CFNetwork.framework */; };
 		4878DB84197FF68A000C8868 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4878DB83197FF68A000C8868 /* libsqlite3.dylib */; };
@@ -201,6 +203,8 @@
 		486A23221A447ABA00B3A2DA /* EGOImageLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageLoader.m; sourceTree = "<group>"; };
 		486A23241A447ABA00B3A2DA /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
 		486A23251A447ABA00B3A2DA /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
+		486A232C1A458E5800B3A2DA /* closeAdv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeAdv.png; sourceTree = "<group>"; };
+		486A232E1A45A47C00B3A2DA /* aboutBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aboutBg@2x.png"; sourceTree = "<group>"; };
 		4878DB7F197FF669000C8868 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4878DB81197FF678000C8868 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4878DB83197FF68A000C8868 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -484,6 +488,8 @@
 		480D91691816AB8D005E30C6 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				486A232E1A45A47C00B3A2DA /* aboutBg@2x.png */,
+				486A232C1A458E5800B3A2DA /* closeAdv.png */,
 				489008E11A3EFCD000BF0F74 /* wel_1.jpg */,
 				489008E21A3EFCD000BF0F74 /* wel_2.jpg */,
 				489008E31A3EFCD000BF0F74 /* wel_3.jpg */,
@@ -914,6 +920,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				486A232D1A458E5800B3A2DA /* closeAdv.png in Resources */,
 				4815340B1A3886150066A7ED /* SVProgressHUD.bundle in Resources */,
 				48ACDD7F1A34720700DC4284 /* report_save_local@2x.png in Resources */,
 				480D9127181563FF005E30C6 /* InfoPlist.strings in Resources */,
@@ -924,6 +931,7 @@
 				480D9133181563FF005E30C6 /* Default-568h@2x.png in Resources */,
 				484551AF1A2DE956009E4947 /* about.png in Resources */,
 				480D91771816AB8D005E30C6 /* tabbar_0@2x.png in Resources */,
+				486A232F1A45A47C00B3A2DA /* aboutBg@2x.png in Resources */,
 				480D91791816AB8D005E30C6 /* tabbar_1@2x.png in Resources */,
 				480D917B1816AB8D005E30C6 /* tabbar_3@2x.png in Resources */,
 				485FD4B119E2C550002E3C94 /* back.png in Resources */,

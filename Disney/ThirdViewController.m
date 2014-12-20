@@ -79,7 +79,8 @@
     [self layoutTitleView];
     
     //
-    _curPage = 0;
+    _newsArray = [[NSMutableArray alloc]initWithCapacity:1];
+    _curPage = 1;
     [self requestData:[NSString stringWithFormat:@"%d",_curPage]];
 
     //
@@ -155,7 +156,7 @@
                 [_tabView reloadData];
                 
                 //
-                [self dismissTipView:@"加载失败"];
+                [self dismissTipView:@"加载成功~"];
                 //
                 ++ _curPage;
                 
@@ -244,7 +245,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"count:%d",[_newsArray count]);
+    NSLog(@"tableview count:%d",[_newsArray count]);
     return [_newsArray count];
 }
 
@@ -268,7 +269,7 @@
     return cell;
 }
 
-
+/*
 -(void)parseData
 {
     [_newsArray removeAllObjects];
@@ -294,7 +295,7 @@
     
     [_tabView reloadData];
 }
-
+*/
 
 
 -(void)dealloc

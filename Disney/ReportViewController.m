@@ -35,6 +35,7 @@
     NSMutableArray * _photoViewFlagArray;
     
     ASIFormDataRequest * _dataReq;
+    ASIFormDataRequest * _townReq;
     
     AppDelegate * _appDel;
     
@@ -43,6 +44,8 @@
     
     NSMutableArray * _scoreArray;
     NSUserDefaults * _scoreDef;
+    
+    UIPickerView * _pickView;
     
 }
 @end
@@ -71,6 +74,8 @@
     
     [self layoutSubView];
     
+    [self sendTownReq];
+    
     //
     _photoViewArray = [[NSMutableArray alloc]initWithCapacity:3];
     _photoSmallDelArray = [[NSMutableArray alloc]initWithCapacity:3];
@@ -88,6 +93,18 @@
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
+
+-(void)sendTownReq
+{
+    _townReq = [[ASIFormDataRequest alloc]initWithURL:[NSURL URLWithString:@"http://115.159.30.191/water/json?"]];
+    [_townReq setPostValue:_appDel.userId forKey:@"userId"];
+    [_townReq setPostValue:@"BC0010" forKey:@"trancode"];
+    [_townReq setPostValue:@"MB" forKey: @"channal"];
+    
+    _townReq.delegate = self;
+    
+    [_townReq startAsynchronous];
+}
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -121,9 +138,11 @@
 
 -(void)initAddrArray
 {
-    _addrArray = [[NSMutableArray alloc]initWithArray:@[@"下沙街道",@"张江高科玉兰香苑",@"孙桥智金元",@"金大元唐人社区"]];
+    //_addrArray = [[NSMutableArray alloc]initWithArray:@[@"下沙街道",@"张江高科玉兰香苑",@"孙桥智金元",@"金大元唐人社区"]];
     
-    _townStr = [_addrArray objectAtIndex:0];
+    _addrArray = [[NSMutableArray alloc]initWithCapacity:1];
+    
+    //_townStr = [_addrArray objectAtIndex:0];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -168,7 +187,7 @@
     
     {
         rect = CGRectMake(20, yPos, 280, 10);
-        UIPickerView * _pickView = [[UIPickerView alloc]initWithFrame:rect];
+        _pickView = [[UIPickerView alloc]initWithFrame:rect];
         _pickView.delegate = self;
         _pickView.dataSource = self;
         _pickView.layer.cornerRadius = 10;
@@ -733,6 +752,36 @@
                 });
             });
         }
+    }
+    else if(request == _townReq )
+    {
+        NSString * str = request.responseString;
+        
+        NSDictionary * dict = [str objectFromJSONString];
+        NSLog(@"dict:%@",dict);
+        //NSLog(@"dict:%@", [[dict objectForKey:@"common"] objectForKey:@"respMsg"]);
+        
+        NSString * strCode = [[dict objectForKey:@"common"] objectForKey:@"respCode"];
+        
+        NSLog(@"strCode:%@ ",strCode);
+        
+        if( [strCode isEqualToString:@"00000"] )
+        {
+            NSArray * array = [[dict objectForKey:@"content"] objectForKey:@"towns"];
+            
+            for( NSDictionary * subDict in array )
+            {
+                if( [subDict isKindOfClass:[NSDictionary class]])
+                {
+                    NSString * str = [subDict objectForKey:@"name"];
+                    
+                    [_addrArray addObject: str];
+                }
+            }
+            
+            [_pickView reloadAllComponents];
+        }
+
     }
 }
 

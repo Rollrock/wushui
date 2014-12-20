@@ -102,11 +102,16 @@
         
         if( [dict isKindOfClass:[NSDictionary class]] )
         {
-            NSString * strTitle = [dict objectForKey:@"title"];
-            NSString * strTime = [dict objectForKey:@"time"];
-            NSString * strSource = [dict objectForKey:@"source"];
-            NSString * strBody = [dict objectForKey:@"body"];
             
+            NSDictionary * subDict = [[dict objectForKey:@"content"] objectForKey:@"infor"];
+            
+            NSString * strTitle = [subDict objectForKey:@"title"];
+            NSString * strTime = [subDict objectForKey:@"time"];
+            NSString * strSource = [subDict objectForKey:@"source"];
+            NSString * strBody = [subDict objectForKey:@"body"];
+            
+            
+            NSLog(@"title:%@  time:%@ source:%@ body:%@",strTitle,strTime,strSource,strBody);
             
             [self laytouView:strTitle withTime:strTime withSource:strSource withBody:strBody];
             
@@ -115,9 +120,6 @@
     else
     {
     }
-    
-    /// test
-    [self laytouView:nil withTime:nil withSource:nil withBody:nil];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -143,8 +145,8 @@
     {
         rect = CGRectMake(10, 15, 300, 20);
         UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
+        //lab.text = @"这里是文章的测试标题";
         lab.text = strTitle;
-        lab.text = @"这里是文章的测试标题";
         lab.textAlignment = NSTextAlignmentCenter;
         lab.font = [UIFont systemFontOfSize:21];
         
@@ -154,12 +156,12 @@
     }
     
     {
-        rect = CGRectMake(10, yPos, 300, 15);
+        rect = CGRectMake(10, yPos, 300, 16);
         UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
         lab.text = [NSString stringWithFormat:@"%@  来源:%@",time,source];
-        lab.text = [NSString stringWithFormat:@"%@  来源:%@",@"2012-05-15 12:07:50",@"富阳五水共智平台"];
+        //lab.text = [NSString stringWithFormat:@"%@  来源:%@",@"2012-05-15 12:07:50",@"富阳五水共智平台"];
         lab.textAlignment = NSTextAlignmentCenter;
-        lab.font = [UIFont systemFontOfSize:12];
+        lab.font = [UIFont systemFontOfSize:14];
         
         [scrView addSubview:lab];
         
@@ -172,11 +174,18 @@
         UIImageView * imgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
         imgView.image = [UIImage imageNamed:@"news_detail_line"];
         [scrView addSubview:imgView];
+        
+        yPos += 2;
     }
     
     //内容
     {
-        
+        rect = CGRectMake(0, yPos, 320, 480-yPos-110);
+        UITextView * textView = [[UITextView alloc]initWithFrame:rect];
+        textView.font = [UIFont systemFontOfSize:18];
+        //textView.text = @"阿斯顿发绝色赌妃；拉大锯撒旦就发；楼上的减肥啊；桑德菲杰啊我二姐夫阿文附近；爱玩客积分阿文附近啊我额积分爱唯欧ijfapoweijfpaijewfaoweijfapwoe飞啊饿剑法哦危机分配安排我饿哦就发泡微积分怕我金额付凹位加法破位将诶反扒奥文件发泡文件发威哦家爱唯欧假发票我耳机发文件噢诶爱唯欧就发我诶减肥跑完iejaweojfaoweijfpawoijef熬阿胶发哦陪我ijepfawejfawejfaowejfpaojwef奥微积分抛丸机而非 啊我阿胶发破位将发票我安排我阿胶发哦微积分怕我金额付奥文件佛啊无金额非怕我饿哦iaowejfpaowjefpawoeij奥文件发哦微积分啊文件发哦陪我iejfpaweaweojfpoawijef啊发破位将佛啊我饥饿法啊我金额富婆啊我金额付啊啊我换个怕我金额帕维";//body;
+        textView.text = body;
+        [scrView addSubview:textView];
     }
     
 }

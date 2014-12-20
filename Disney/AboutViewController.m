@@ -40,6 +40,15 @@
 
 -(void)layoutView
 {
+    CGRect rect = CGRectMake(0, 0, 320, 450);
+    UIImageView * imgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
+    
+    imgView.image = [UIImage imageNamed:@"aboutBg"];
+    
+    [self.view addSubview:imgView];
+    
+    
+    /*
     CGRect rect;
     
     {
@@ -86,6 +95,7 @@
         }
     }
     
+     */
 }
 
 -(void)backClicked

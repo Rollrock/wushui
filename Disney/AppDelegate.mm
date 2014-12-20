@@ -134,7 +134,23 @@
     [self.window makeKeyAndVisible];
     
     
+    [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(gotoWelcomeView) userInfo:nil repeats:NO];
+
+    
     return YES;
+}
+
+
+-(void)gotoWelcomeView
+{
+    static BOOL bFlag = NO;
+    
+    if( !bFlag )
+    {
+        bFlag = YES;
+        [self.mainViewController updateWelcomeView];
+    }
+    
 }
 
 - (void)requestFinished:(ASIHTTPRequest *)request
@@ -152,12 +168,28 @@
         
         self.mainViewController.updateDate = [[[[dict objectForKey:@"content"] objectForKey:@"infor"]objectForKey:@"update"]retain];
         
-        NSLog(@"msg:%@",[[dict objectForKey:@"common"] objectForKey:@"respMsg"]);
+        //NSLog(@"msg:%@",[[dict objectForKey:@"common"] objectForKey:@"respMsg"]);
+        
+        
+        NSUserDefaults * def = [NSUserDefaults standardUserDefaults];
+        NSString * update = [def objectForKey:@"update"];
+        if( update == nil )
+        {
+            update = @"20140101";
+            [def setObject:update forKey:@"update"];
+            [def synchronize];
+        }
+        
+        if( [update compare:self.mainViewController.updateDate] != NSOrderedAscending )
+        {
+            [self gotoWelcomeView];
+            return;
+        }
         
         
         NSArray * array = [[dict objectForKey:@"content"] objectForKey:@"images"];
         
-        
+
         for(NSDictionary * subDict in array )
         {
             if( [subDict isKindOfClass:[NSDictionary class]] )
@@ -170,24 +202,24 @@
             }
         }
         
-        [self.mainViewController updateWelcomeView];
-        
-        
+        [self gotoWelcomeView];
         ///
     }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    
+    [self gotoWelcomeView];
 }
 
 - (void)onGetNetworkState:(int)iError
 {
-    if (0 == iError) {
+    if (0 == iError)
+    {
         NSLog(@"联网成功");
     }
-    else{
+    else
+    {
         NSLog(@"onGetNetworkState %d",iError);
     }
     
