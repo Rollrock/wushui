@@ -94,6 +94,7 @@
     self.navigationItem.titleView = lab;
 }
 
+
 -(void)locationClicked
 {
     NSLog(@"locationClicked");

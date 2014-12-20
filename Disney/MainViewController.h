@@ -27,4 +27,10 @@
 }
 
 
+@property(nonatomic,retain) NSString * updateDate;
+@property(nonatomic,retain) NSMutableArray * imgUrlArray;
+
+
+-(void)updateWelcomeView;
+
 @end

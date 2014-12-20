@@ -332,7 +332,6 @@
     [SVProgressHUD dismiss];
     
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 
@@ -345,7 +344,7 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
         
-        sleep(0.5f);
+        sleep(1.5f);
         
         dispatch_async(dispatch_get_main_queue(), ^(void){
             

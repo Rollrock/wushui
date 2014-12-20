@@ -45,24 +45,25 @@
     
     [self startRequest];
     
+    [self layoutBackView];
     
-    {
-        
-        UIButton * leftBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 25)];
-        [leftBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
-        [leftBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-        
-        UIBarButtonItem * leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
-        
-        self.navigationItem.leftBarButtonItem = leftItem;
-        
-    }
-
     
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
 
+-(void)layoutBackView
+{
+    
+    UIButton * leftBtn = [[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 25)]autorelease];
+    [leftBtn addTarget:self action:@selector(backClicked) forControlEvents:UIControlEventTouchUpInside];
+    [leftBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    
+    UIBarButtonItem * leftItem = [[[UIBarButtonItem alloc]initWithCustomView:leftBtn]autorelease];
+    
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+}
 -(void)startRequest
 {
     AppDelegate * _appDel = (AppDelegate*)[[UIApplication sharedApplication]delegate];
@@ -109,7 +110,7 @@
             }
             
             //test
-            NSMutableArray * array = [[ NSMutableArray alloc]initWithObjects:@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg",@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg", nil];
+            NSMutableArray * array = [[[ NSMutableArray alloc]initWithObjects:@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg",@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg", nil]autorelease];
             //
             [self layoutRespView:status withBackward:backward withImgUrlArray:array];
             
@@ -139,7 +140,7 @@
     downYPos += 20;
     {
         rect = CGRectMake(10, downYPos, 300, 20);
-        UILabel * lab = [[UILabel alloc]initWithFrame:rect];
+        UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
         lab.text = [NSString stringWithFormat:@"反馈内容 :%@",backward];
         
         [_scrView addSubview:lab];
@@ -152,7 +153,7 @@
         downYPos += 40;
         
         rect = CGRectMake(10, downYPos-10, 100, 20);
-        UILabel * lab = [[UILabel alloc]initWithFrame:rect];
+        UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
         lab.text = @"反馈图片";
         
         [_scrView addSubview:lab];
@@ -161,7 +162,7 @@
         for( int i = 0; i < ([array count] >= 2 ? 2: [array count]); ++ i )
         {
             rect = CGRectMake(10+100+10 + (80+10)*i, downYPos - 40, 80, 80);
-            UIImageView * imgView = [[UIImageView alloc]initWithFrame:rect];
+            UIImageView * imgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
             imgView.layer.cornerRadius = 5;
             imgView.layer.masksToBounds = YES;
             [imgView setImageWithURL:[NSURL URLWithString:[array objectAtIndex:i]]];
@@ -174,7 +175,7 @@
     
     {
         rect = CGRectMake(10, downYPos, 300, 20);
-        UILabel * lab = [[UILabel alloc]initWithFrame:rect];
+        UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
         lab.text = @"满意度评分";
         
         [_scrView addSubview:lab];
@@ -197,7 +198,7 @@
     
     {
         rect = CGRectMake(80, downYPos, 180, 40);
-        UIButton * btnScore = [[UIButton alloc]initWithFrame:rect];
+        UIButton * btnScore = [[[UIButton alloc]initWithFrame:rect]autorelease];
         [btnScore setBackgroundImage:[UIImage imageNamed:@"submit_score"] forState:UIControlStateNormal];
         
         [btnScore addTarget:self action:@selector(scoreClick) forControlEvents:UIControlEventTouchUpInside];
@@ -276,7 +277,7 @@
     
     //
     rect = CGRectMake(5, 0, 310, 170);
-    UIImageView * bgView = [[UIImageView alloc]initWithFrame:rect];
+    UIImageView * bgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
     bgView.image = [UIImage imageNamed:@"score_cell_bg"];
     bgView.userInteractionEnabled = YES;
     [_scrView addSubview:bgView];

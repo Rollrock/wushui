@@ -49,8 +49,22 @@
     
     [self loadLocalInfo];
     
+    [self layoutTitleView];
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
+}
+
+
+-(void)layoutTitleView
+{
+    CGRect rect = CGRectMake(0, 0, 100, 30);
+    
+    UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
+    lab.text = @"我要评分";
+    lab.textColor = [UIColor whiteColor];
+    
+    self.navigationItem.titleView = lab;
 }
 
 

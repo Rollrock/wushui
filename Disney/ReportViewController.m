@@ -455,17 +455,15 @@
     [dict setObject:_phoneTextView.text forKey:@"phone"];
     [dict setObject:[self getCurrentMeesageNo] forKey:@"messageNo"];
     [dict setObject:[self getCurrentTime] forKey:@"time"];
-    //[dict setObject:INFO_TYPE_SAVE forKey:INFO_TYPE];
     
     //  image
-    
     for( int index = 0; index < [_photoViewArray count]; ++ index )
     {
         NSString * strPath = [NSString stringWithFormat:@"%@/report_%d.jpg",[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"],index];
         
         NSLog(@"strPath:%@",strPath);
         
-        UIImageView * imgView = [(UIImageView*)[_photoViewArray objectAtIndex:index]autorelease];
+        UIImageView * imgView = (UIImageView*)[_photoViewArray objectAtIndex:index];
         //
         UIImage * targetImage = [self imageByScalingToSize:CGSizeMake(320*0.5, 480*0.5) withSource:imgView.image];
         
@@ -734,9 +732,7 @@
                     [self showViewCallback];
                 });
             });
- 
         }
-        
     }
 }
 

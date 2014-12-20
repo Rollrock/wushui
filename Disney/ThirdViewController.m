@@ -9,28 +9,28 @@
 #import "ThirdViewController.h"
 #import "NewListCell.h"
 #import "JSONKit.h"
-#import "EGORefreshTableHeaderView.h"
 #import "ASIFormDataRequest.h"
-
 #import "AppDelegate.h"
-
 #import "MyWaitView.h"
+#import "SVProgressHUD.h"
 
 #define CELL_HEIGHT 60.0f
+#define PER_PANG_NUM  @"10"
 
 #define STR_URL  @"http://115.159.30.191/water/json?"
 
 
-@interface ThirdViewController ()<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate,ASIHTTPRequestDelegate>
+@interface ThirdViewController ()<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate>
 {
     NSMutableArray * _newsArray;
     
-    EGORefreshTableHeaderView * _headView;
     MyWaitView * _waitView;
     
     BOOL  _isLoading;
     
     ASIFormDataRequest * _dataReq;
+    
+    int _curPage;
 }
 
 @end
@@ -45,38 +45,6 @@
 
     }
     return self;
-}
-
-
--(void)initTestData
-{
-    
-    _newsArray = [[NSMutableArray alloc]initWithCapacity:1];
-    
-    NSString * filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"news.txt"];
-    NSString * strText = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    
-    NSLog(@"strText:%@",strText);
-    
-    NSDictionary * dict = [strText objectFromJSONString];
-    
-    if( [dict isKindOfClass:[NSDictionary class]] )
-    {
-        NSArray * array = [dict objectForKey:@"news"];
-        
-        for( NSDictionary * subDict in array )
-        {
-            NewsListInfo * info = [[[NewsListInfo alloc]init]autorelease];
-            [info fromDict:subDict];
-            
-            [_newsArray addObject:info];
-        }
-    }
-    
-    
-    
-    [_tabView reloadData];
-
 }
 
 
@@ -103,24 +71,38 @@
     _tabView.dataSource = self;
     
     [self.view addSubview:_tabView];
+    //
     
     _isLoading = NO;
     
+    //
+    [self layoutTitleView];
+    
+    //
+    _curPage = 0;
+    [self requestData:[NSString stringWithFormat:@"%d",_curPage]];
 
+    //
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    
-    [self initTestData];
-    
-    
-    [self requestData];
-    
 }
 
--(void)requestData
+
+-(void)layoutTitleView
 {
-    AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    CGRect rect = CGRectMake(0, 0, 100, 30);
     
+    UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
+    lab.text = @"富阳视点";
+    lab.textColor = [UIColor whiteColor];
+    
+    self.navigationItem.titleView = lab;
+}
+
+-(void)requestData:(NSString *)curPage
+{
+    [SVProgressHUD showWithStatus:@"加载中，请稍等..."];
+    
+    AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
     _dataReq = [[ASIFormDataRequest alloc]initWithURL:[NSURL URLWithString:STR_URL]];
     
@@ -128,12 +110,10 @@
     [_dataReq setPostValue:[appDel getDeviceid] forKey: @"deviceid"];
     [_dataReq setPostValue:@"BC0007" forKey:@"trancode"];
     [_dataReq setPostValue:appDel.userId forKey:@"userId"];
-    [_dataReq setPostValue:@"1" forKey:@"page"];
-    [_dataReq setPostValue:@"10" forKey:@"pageNum"];
-    
+    [_dataReq setPostValue:curPage forKey:@"page"];
+    [_dataReq setPostValue:PER_PANG_NUM forKey:@"pageNum"];
     
     [_dataReq setDefaultResponseEncoding:NSUTF8StringEncoding];
-    
     _dataReq.delegate = self;
     
     [_dataReq startAsynchronous];
@@ -148,12 +128,48 @@
     {
         NSString * str = request.responseString;
         
-        NSLog(@"str:%@",str);
+        NSDictionary * dict = [str objectFromJSONString];
+        
+        NSLog(@"dict:%@",dict);
+        NSLog(@"dict:%@", [[dict objectForKey:@"common"] objectForKey:@"respMsg"]);
+        
+        NSString * strCode = [[dict objectForKey:@"common"] objectForKey:@"respCode"];
+        
+        NSLog(@"strCode:%@ ",strCode);
+        
+        
+        if( [strCode isEqualToString:@"00000"] )
+        {
+            NSArray * newsArray = [[dict objectForKey:@"content"] objectForKey:@"news"];
+            
+            if( [newsArray isKindOfClass:[NSArray class]] )
+            {
+                for( NSDictionary * subDict in newsArray )
+                {
+                    NewsListInfo * info = [[[NewsListInfo alloc]init]autorelease];
+                    [info fromDict:subDict];
+                    
+                    [_newsArray addObject:info];
+                }
+                
+                [_tabView reloadData];
+                
+                //
+                [self dismissTipView:@"加载失败"];
+                //
+                ++ _curPage;
+                
+                [_dataReq release];
+                _dataReq = nil;
+                
+                return;
+            }
+        }
     }
-    else
-    {
-    }
+    
+    [self dismissTipView:@"加载失败"];
 }
+
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
@@ -161,10 +177,54 @@
     
     if(request == _dataReq)
     {
-       
+        [self dismissTipView:@"加载失败"];
+        
+        [_dataReq release];
+        _dataReq = nil;
+        
     }
 }
 
+
+-(void)dismissTipView:(NSString*)title
+{
+    [SVProgressHUD showWithStatus:title];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
+        
+        sleep(1.0f);
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            
+            [SVProgressHUD dismiss];
+        });
+    });
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 50;
+}
+
+
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    CGRect rect = CGRectMake(0, 0, 320, 50);
+    UIButton * btn = [[[UIButton alloc]initWithFrame:rect]autorelease];
+    btn.backgroundColor = [UIColor lightGrayColor];
+    [btn setTitle:@"加载更多" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
+    
+    return btn;
+}
+
+-(void)loadMore
+{
+    NSLog(@"loadMore");
+    
+    [self requestData:[NSString stringWithFormat:@"%d",_curPage]];
+    
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -174,7 +234,6 @@
     vc.newsid = ((NewsListInfo*)[_newsArray objectAtIndex:indexPath.row]).newsid;
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
-    
 }
 
 
@@ -236,39 +295,6 @@
     [_tabView reloadData];
 }
 
-
--(void)reloadDataSourceDone
-{
-    _isLoading = NO;
-    
-    [_headView egoRefreshScrollViewDataSourceDidFinishedLoading:_tabView];
-}
-
--(void)reloadDataSource
-{
-    _isLoading = YES;
-    
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_headView egoRefreshScrollViewDidScroll:scrollView];
-}
-
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_headView egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
-{
-    [self reloadDataSource];
-}
-
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
-{
-    return _isLoading;
-}
 
 
 -(void)dealloc

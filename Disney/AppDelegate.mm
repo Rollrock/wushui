@@ -94,8 +94,6 @@
     
     NSLog(@"result:%@",result);
     
-    //return @"123456";//[result autorelease];
-    
     return [result autorelease];
 }
 
@@ -130,8 +128,6 @@
     self.mainViewController = [[[MainViewController alloc]initWithNibName:nil bundle:nil]autorelease];
     self.window.rootViewController = self.mainViewController;
     
-    //self.window.rootViewController = [[[ReportViewController alloc]init]autorelease];
-    
     
     [self initLoacation];
     
@@ -150,9 +146,34 @@
         NSDictionary * dict = [str objectFromJSONString];
         
         
-        NSLog(@"dict:%@",dict);
+        NSLog(@"----dict:%@",dict);
         
         self.userId = [[[dict objectForKey:@"content"] objectForKey:@"infor"]objectForKey:@"userId"];
+        
+        self.mainViewController.updateDate = [[[[dict objectForKey:@"content"] objectForKey:@"infor"]objectForKey:@"update"]retain];
+        
+        NSLog(@"msg:%@",[[dict objectForKey:@"common"] objectForKey:@"respMsg"]);
+        
+        
+        NSArray * array = [[dict objectForKey:@"content"] objectForKey:@"images"];
+        
+        
+        for(NSDictionary * subDict in array )
+        {
+            if( [subDict isKindOfClass:[NSDictionary class]] )
+            {
+                NSString * strurl = [subDict objectForKey:@"src"];
+                
+                [self.mainViewController.imgUrlArray addObject:strurl];
+                
+                NSLog(@"strUrl:%@",strurl);
+            }
+        }
+        
+        [self.mainViewController updateWelcomeView];
+        
+        
+        ///
     }
 }
 
