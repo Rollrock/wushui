@@ -213,6 +213,7 @@
     CGRect rect = CGRectMake(0, 0, 320, 50);
     UIButton * btn = [[[UIButton alloc]initWithFrame:rect]autorelease];
     btn.backgroundColor = [UIColor lightGrayColor];
+    btn.alpha = 0.5;
     [btn setTitle:@"加载更多" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(loadMore) forControlEvents:UIControlEventTouchUpInside];
     

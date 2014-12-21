@@ -54,10 +54,12 @@
     }
 #endif
     
-    NSLog(@"!!!!-%f=%f--%f",self.view.frame.origin.y,self.view.frame.size.height,[[UIScreen mainScreen] bounds].size.height);
     
     CGRect rect =  CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height - CUSTOM_TAB_BAR_HEIGHT);
 
+    NSLog(@"frame:-%f--%f--%f--%f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+
+    
     
     _mapView = [[BMKMapView alloc]initWithFrame:rect];
     _mapView.delegate = self;
@@ -144,7 +146,7 @@
 - (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
     
-    return;
+    //return;
     
     /*
      //longitude

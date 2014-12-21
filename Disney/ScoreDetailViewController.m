@@ -110,9 +110,9 @@
             }
             
             //test
-            NSMutableArray * array = [[[ NSMutableArray alloc]initWithObjects:@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg",@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg", nil]autorelease];
+            //NSMutableArray * array = [[[ NSMutableArray alloc]initWithObjects:@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg",@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg", nil]autorelease];
             //
-            [self layoutRespView:status withBackward:backward withImgUrlArray:array];
+            [self layoutRespView:status withBackward:backward withImgUrlArray:imgUrlArray];
             
         }
     }
@@ -158,6 +158,17 @@
         
         [_scrView addSubview:lab];
         //
+        
+        for( int i = 0; i < 2; ++ i )
+        {
+            rect = CGRectMake(10+100+10 + (80+10)*i, downYPos - 40, 80, 80);
+            UIImageView * imgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
+            imgView.layer.cornerRadius = 5;
+            imgView.layer.masksToBounds = YES;
+            imgView.image = [UIImage imageNamed:@"noPhoto"];
+            [_scrView addSubview:imgView];
+        }
+
         
         for( int i = 0; i < ([array count] >= 2 ? 2: [array count]); ++ i )
         {
@@ -276,7 +287,7 @@
     CGRect rect;
     
     //
-    rect = CGRectMake(5, 0, 310, 170);
+    rect = CGRectMake(5, 0, 310, 160);
     UIImageView * bgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
     bgView.image = [UIImage imageNamed:@"score_cell_bg"];
     bgView.userInteractionEnabled = YES;

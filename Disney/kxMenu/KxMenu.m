@@ -564,10 +564,11 @@ typedef enum {
 
 + (UIImage *) selectedImage: (CGSize) size
 {
+    //132   209  193
     const CGFloat locations[] = {0,1};
     const CGFloat components[] = {
-        0.216, 0.471, 0.871, 1,
-        0.059, 0.353, 0.839, 1,
+        152/255.0, 239/255.0, 200/255.0, 1,
+        152/255.0, 239/255.0, 200/255.0, 1,
     };
     
     return [self gradientImageWithSize:size locations:locations components:components count:2];
@@ -618,8 +619,9 @@ typedef enum {
 - (void)drawBackground:(CGRect)frame
              inContext:(CGContextRef) context
 {
-    CGFloat R0 = 0.267, G0 = 0.303, B0 = 0.335;
-    CGFloat R1 = 0.040, G1 = 0.040, B1 = 0.040;
+    
+    CGFloat R0 = 132.0/255, G0 = 209/255.0, B0 = 193/255.0;
+    CGFloat R1 = 132.0/255, G1 = 209/255.0, B1 = 193/255.0;
     
     UIColor *tintColor = [KxMenu tintColor];
     if (tintColor) {

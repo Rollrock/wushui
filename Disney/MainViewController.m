@@ -17,9 +17,8 @@
 #import "SVProgressHUD.h"
 #import "AppDelegate.h"
 #import "SDWebImageManager.h"
-#import "EGOImageView.h"
 
-@interface MainViewController ()<tabbarViewDelegate,UIScrollViewDelegate,SDWebImageManagerDelegate,EGOImageViewDelegate,NSURLConnectionDelegate>
+@interface MainViewController ()<tabbarViewDelegate,UIScrollViewDelegate,SDWebImageManagerDelegate,NSURLConnectionDelegate>
 {
     BMKMapView * _mapView;
     
@@ -54,7 +53,7 @@
         
         self.view.backgroundColor = [UIColor whiteColor];
         
-        self.imgUrlArray = [[NSMutableArray alloc]initWithCapacity:3];
+        self.imgUrlArray = [[[NSMutableArray alloc]initWithCapacity:3]autorelease];
         
     }
     return self;
@@ -211,7 +210,9 @@
 {
     #define ADV_HEIGHT   50
     
-    CGRect rect = CGRectMake(0, 480-ADV_HEIGHT, 320, ADV_HEIGHT);
+    
+    
+    CGRect rect = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height*2, 320, ADV_HEIGHT);
     
     if( _advImgView == nil )
     {
@@ -235,7 +236,17 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"closeAdv"] forState:UIControlStateNormal];
         UITapGestureRecognizer * g = [[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openWeb)]autorelease];
         [_advImgView addGestureRecognizer:g];
+        
+        
+        //
+        
+        [UIView animateWithDuration:5.0f animations:^(void){
+           
+            _advImgView.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height-ADV_HEIGHT, 320, ADV_HEIGHT);
+        }];
     }
+    
+
 }
 
 
@@ -289,7 +300,7 @@
     {
         if( connection == [_connArray objectAtIndex:i] )
         {
-            UIImage *image = [[UIImage alloc] initWithData:[_dataArray objectAtIndex:i]];
+            UIImage *image = [[[UIImage alloc] initWithData:[_dataArray objectAtIndex:i]]autorelease];
             
             UIImageView * imgView = [_imgViewArray objectAtIndex:i];
             imgView.image = image;
@@ -327,6 +338,11 @@
             _tempImgView = nil;
         }
 
+        if(_control)
+        {
+            [_control removeFromSuperview];
+            _control = nil;
+        }
         
         
         [self requestAdvData];
@@ -404,7 +420,7 @@
     uiScrollview.showsHorizontalScrollIndicator = NO;
     uiScrollview.contentSize = CGSizeMake([self.imgUrlArray count]*width, height);
     uiScrollview.pagingEnabled = YES;
-    uiScrollview.backgroundColor = [UIColor redColor];
+    uiScrollview.backgroundColor = [UIColor whiteColor];
     uiScrollview.delegate = self;
     
     UIPageControl *control = [[UIPageControl alloc] init];
@@ -428,6 +444,8 @@
     //
     [self removeWelComeView];
     
+    
+    /*
     //
     CGRect rect;
     
@@ -449,7 +467,7 @@
     [self initSubViewController];
     
     [self.view insertSubview:_firstNav.view belowSubview:_tabbarView];
-    
+    */
 }
 
 - (void) onPointClick
@@ -489,26 +507,24 @@
 {
     NSArray *menuItems =
     @[
+      /*
       [KxMenuItem menuItem:@"举报"
                      image:nil
                     target:nil
                     action:NULL],
+      */
       
       [KxMenuItem menuItem:@"我要举报"
-                     image:[UIImage imageNamed:@"action_icon"]
+                     image:nil//[UIImage imageNamed:@"action_icon"]
                     target:self
                     action:@selector(gotoReport)],
       
       [KxMenuItem menuItem:@"本地列表"
-                     image:[UIImage imageNamed:@"check_icon"]
+                     image:nil//[UIImage imageNamed:@"check_icon"]
                     target:self
                     action:@selector(localReportList)]
       ];
     
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
     
     CGRect frame = CGRectMake(280, 20, 20, 20);
     
@@ -522,32 +538,24 @@
 {
     NSArray *menuItems =
     @[
-      
+      /*
       [KxMenuItem menuItem:@"菜单"
                      image:nil
                     target:nil
                     action:NULL],
-      
+      */
       
       [KxMenuItem menuItem:@"关于我们"
                      image:[UIImage imageNamed:@"action_icon"]
                     target:self
                     action:@selector(AboutClicked)],
       
-      /*
-      [KxMenuItem menuItem:@"备选项目"
-                     image:[UIImage imageNamed:@"check_icon"]
-                    target:self
-                    action:@selector(pushMenuItem:)]
-       */
       ];
     
-    
-    KxMenuItem *first = menuItems[0];
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-    
+
     CGRect frame = CGRectMake(10, 20, 20, 20);
+    
+    [KxMenu setTintColor: [UIColor colorWithRed:132/255.0f green:209/255.0f blue:193/255.0f alpha:1.0]];
     
     [KxMenu showMenuInView:self.view
                   fromRect:frame
@@ -582,7 +590,7 @@
     _firstViewC.navigationItem.leftBarButtonItem = leftItem;
     
     
-    UIButton * rightBtn = [[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 35, 25)]autorelease];
+    UIButton * rightBtn = [[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 35)]autorelease];
     [rightBtn addTarget:self action:@selector(showReportMenu) forControlEvents:UIControlEventTouchUpInside];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"localsave"] forState:UIControlStateNormal];
     

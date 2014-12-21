@@ -168,6 +168,11 @@
     _townStr = [_addrArray objectAtIndex:row];
 }
 
+-(UIColor*)commonBackColor
+{
+    return [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1];
+}
+
 -(void)layoutSubView
 {
     CGFloat yPos = 0;
@@ -192,7 +197,7 @@
         _pickView.dataSource = self;
         _pickView.layer.cornerRadius = 10;
         _pickView.layer.masksToBounds = YES;
-        _pickView.backgroundColor = [UIColor lightGrayColor];
+        _pickView.backgroundColor = [self commonBackColor];//[UIColor lightGrayColor];
         
         [_scrView addSubview:_pickView];
         [_pickView release];
@@ -217,7 +222,7 @@
         rect = CGRectMake(20, yPos, 280, 40);
         
         _addTextView = [[UITextView alloc]initWithFrame:rect];
-        _addTextView.backgroundColor = [UIColor lightGrayColor];
+        _addTextView.backgroundColor = [self commonBackColor];//[UIColor lightGrayColor];
         _addTextView.font = [UIFont systemFontOfSize:20];
         _addTextView.layer.cornerRadius = 8;
         _addTextView.delegate = self;
@@ -244,7 +249,7 @@
         rect = CGRectMake(20, yPos, 280, 120);
         
         _descTextView = [[UITextView alloc]initWithFrame:rect];
-        _descTextView.backgroundColor = [UIColor lightGrayColor];
+        _descTextView.backgroundColor = [self commonBackColor];//[UIColor lightGrayColor];
         _descTextView.layer.cornerRadius = 8;
         _descTextView.font = [UIFont systemFontOfSize:20];
         _descTextView.delegate = self;
@@ -270,7 +275,7 @@
         rect = CGRectMake(20, yPos, 280, 40);
         
         _nameTextView = [[UITextView alloc]initWithFrame:rect];
-        _nameTextView.backgroundColor = [UIColor lightGrayColor];
+        _nameTextView.backgroundColor = [self commonBackColor];//[UIColor lightGrayColor];
         _nameTextView.layer.cornerRadius = 8;
         _nameTextView.delegate = self;
         _nameTextView.font = [UIFont systemFontOfSize:20];
@@ -297,7 +302,7 @@
         rect = CGRectMake(20, yPos, 280, 40);
         
         _phoneTextView = [[UITextView alloc]initWithFrame:rect];
-        _phoneTextView.backgroundColor = [UIColor lightGrayColor];
+        _phoneTextView.backgroundColor = [self commonBackColor];//[UIColor lightGrayColor];
         _phoneTextView.layer.cornerRadius = 8;
         _phoneTextView.delegate = self;
         _phoneTextView.font = [UIFont systemFontOfSize:20];
@@ -366,25 +371,43 @@
         yPos += 80 + 10;
     }
      */
+    for( int count = 0; count < 3; ++ count )
+    {
+        CGRect rect = CGRectMake(25+count*(SMALL_PIC_WIDTH+10), photoBegY, SMALL_PIC_WIDTH,SMALL_PIC_WIDTH);
+        UIImageView * imgView = [[[UIImageView alloc]initWithFrame:rect]autorelease];
+        imgView.image = [UIImage imageNamed:@"noPhoto"];
+        [_scrView addSubview:imgView];
+    }
+    
     
     yPos += SMALL_PIC_WIDTH + 35;
     
     
     {
         {
-            rect = CGRectMake(30, yPos, 120, 25);
+            rect = CGRectMake(20, yPos, 130, 30);
             UIButton * btn = [[UIButton alloc]initWithFrame:rect];
             [btn setBackgroundImage:[UIImage imageNamed:@"report_save_local"] forState:UIControlStateNormal];
+            btn.backgroundColor = [UIColor grayColor];
+            btn.layer.cornerRadius = 5;
+            btn.layer.masksToBounds = YES;
+            btn.layer.borderColor = [UIColor grayColor].CGColor;
+            btn.layer.borderWidth = 1;
             [btn addTarget:self action:@selector(ReportSaveLocal) forControlEvents:UIControlEventTouchUpInside];
             [_scrView addSubview:btn];
 
         }
         
         {
-            rect = CGRectMake(180, yPos, 120, 25);
+            rect = CGRectMake(170, yPos, 130, 30);
             UIButton * btn = [[UIButton alloc]initWithFrame:rect];
             [btn setBackgroundImage:[UIImage imageNamed:@"report_now"] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(ReportNow) forControlEvents:UIControlEventTouchUpInside];
+            btn.backgroundColor = [UIColor grayColor];
+            btn.layer.cornerRadius = 5;
+            btn.layer.masksToBounds = YES;
+            btn.layer.borderColor = [UIColor grayColor].CGColor;
+            btn.layer.borderWidth = 1;
             [_scrView addSubview:btn];
             
         }
@@ -779,6 +802,8 @@
                 }
             }
             
+            _townStr = [_addrArray objectAtIndex:0];
+            
             [_pickView reloadAllComponents];
         }
 
@@ -827,11 +852,16 @@
 
 -(void)takePhoto
 {
+    _imgPicker = nil;
+    
     _imgPicker = [[[UIImagePickerController alloc]init]autorelease];
     _imgPicker.delegate = self;
     _imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
-    [self presentViewController:_imgPicker animated:YES completion:nil];
+    
+    //[self presentViewController:_imgPicker animated:YES completion:nil];
+     [self.view.window.rootViewController presentViewController:_imgPicker animated:YES completion:nil];
+    
 }
 
 
