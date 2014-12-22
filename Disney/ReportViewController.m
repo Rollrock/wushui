@@ -90,6 +90,15 @@
         self.navigationItem.leftBarButtonItem = leftItem;
     }
     
+    {
+        CGRect rect = CGRectMake(0, 0, 50, 30);
+        UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
+        lab.text = @"我要举报";
+        lab.textColor = [UIColor whiteColor];
+        lab.textAlignment = NSTextAlignmentCenter;
+        self.navigationItem.titleView = lab;
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
@@ -115,6 +124,11 @@
 -(void)backClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"0" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
+
 }
 
 
@@ -385,29 +399,32 @@
     
     {
         {
-            rect = CGRectMake(20, yPos, 130, 30);
+            rect = CGRectMake(10, yPos, 140, 40);
             UIButton * btn = [[UIButton alloc]initWithFrame:rect];
             [btn setBackgroundImage:[UIImage imageNamed:@"report_save_local"] forState:UIControlStateNormal];
-            btn.backgroundColor = [UIColor grayColor];
+           /* btn.backgroundColor = [UIColor colorWithRed:132/255.0f green:209/255.0f blue:193/255.0f alpha:1.0];
             btn.layer.cornerRadius = 5;
             btn.layer.masksToBounds = YES;
-            btn.layer.borderColor = [UIColor grayColor].CGColor;
+            btn.layer.borderColor = [UIColor colorWithRed:132/255.0f green:209/255.0f blue:193/255.0f alpha:1.0].CGColor;//[UIColor grayColor].CGColor;
             btn.layer.borderWidth = 1;
+            */
             [btn addTarget:self action:@selector(ReportSaveLocal) forControlEvents:UIControlEventTouchUpInside];
             [_scrView addSubview:btn];
 
         }
         
         {
-            rect = CGRectMake(170, yPos, 130, 30);
+            rect = CGRectMake(160, yPos, 150, 40);
             UIButton * btn = [[UIButton alloc]initWithFrame:rect];
             [btn setBackgroundImage:[UIImage imageNamed:@"report_now"] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(ReportNow) forControlEvents:UIControlEventTouchUpInside];
-            btn.backgroundColor = [UIColor grayColor];
+            /*
+             btn.backgroundColor = [UIColor colorWithRed:132/255.0f green:209/255.0f blue:193/255.0f alpha:1.0];
             btn.layer.cornerRadius = 5;
             btn.layer.masksToBounds = YES;
-            btn.layer.borderColor = [UIColor grayColor].CGColor;
+            btn.layer.borderColor = [UIColor colorWithRed:132/255.0f green:209/255.0f blue:193/255.0f alpha:1.0].CGColor;//[UIColor grayColor].CGColor;
             btn.layer.borderWidth = 1;
+             */
             [_scrView addSubview:btn];
             
         }
@@ -542,7 +559,7 @@
 {
     [SVProgressHUD dismiss];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self backClicked];
     
 }
 

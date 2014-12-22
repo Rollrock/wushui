@@ -93,22 +93,39 @@
     _tempImgView.image = [UIImage imageNamed:@"Default"];
     
     [self.view addSubview:_tempImgView];
+    
+    //
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerCallback:) name:HIDE_TAB_BAR_NAME object:nil];
+
 }
+
+-(void)registerCallback:(NSNotification*)notification
+{
+    NSDictionary * data = [notification userInfo];
+    
+    NSString * strChange = [data objectForKey:HIDE_TAB_BAR_KEY];
+    
+    
+    if( [strChange isEqualToString:@"1"])
+    {
+        [self hideTabbar:YES];
+    }
+    else if( [strChange isEqualToString:@"0"] )
+    {
+        [self hideTabbar:NO];
+    }
+}
+
 
 
 -(void)updateWelcomeView
 {
     NSLog(@"updateWelcomeView");
     
-    //
-    static BOOL bFlag = NO;
-    
     [self initWelcomeView];
     
     //兼容机制   如果下载没有成功  过30秒之后就直接进入界面
     [NSTimer scheduledTimerWithTimeInterval:30.0f target:self selector:@selector(removeWelComeView) userInfo:nil repeats:NO];
-    
-   // bFlag = YES;
 }
 
 -(void)requestAdvData
@@ -171,7 +188,6 @@
             }
         }
     }
-    
 }
 
 
@@ -209,8 +225,7 @@
 -(void)showAdvView:(NSString*)imgUrl
 {
     #define ADV_HEIGHT   50
-    
-    
+
     
     CGRect rect = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height*2, 320, ADV_HEIGHT);
     
@@ -245,8 +260,6 @@
             _advImgView.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height-ADV_HEIGHT, 320, ADV_HEIGHT);
         }];
     }
-    
-
 }
 
 
@@ -494,6 +507,8 @@
 {
     ReportViewController * vc = [[[ReportViewController alloc]init]autorelease];
     [_firstNav pushViewController:vc animated:YES];
+    
+    [self hideTabbar:YES];
 }
 
 //本地举报列表
@@ -501,6 +516,8 @@
 {
     LocalSaveListViewController * vc = [[[LocalSaveListViewController alloc]initWithNibName:nil bundle:nil]autorelease];
     [_firstNav pushViewController:vc animated:YES];
+    
+    [self hideTabbar:YES];
 }
 
 -(void)showReportMenu
@@ -545,7 +562,7 @@
                     action:NULL],
       */
       
-      [KxMenuItem menuItem:@"关于我们"
+      [KxMenuItem menuItem:@"关于软件"
                      image:[UIImage imageNamed:@"action_icon"]
                     target:self
                     action:@selector(AboutClicked)],
@@ -573,6 +590,33 @@
     AboutViewController * vc = [[[AboutViewController alloc]init]autorelease];
     //vc.title = @"关于我们";
     [_firstNav pushViewController:vc animated:YES];
+    
+    //
+    /*
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"1" forKey:@"change"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"notify" object:nil userInfo:dict];
+*/
+    
+    [self hideTabbar:YES];
+}
+
+
+-(void)hideTabbar:(BOOL)hide
+{
+    if( hide )
+    {
+        [UIView animateWithDuration:0.5 animations:^(void){
+            
+            _tabbarView.center = CGPointMake(_tabbarView.center.x , _tabbarView.center.y + _tabbarView.frame.size.height);
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5 animations:^(void){
+        _tabbarView.center = CGPointMake(_tabbarView.center.x , _tabbarView.center.y - _tabbarView.frame.size.height);
+        }];
+    }
+    
 }
 
 -(void)layoutFirstNavEx
@@ -694,6 +738,8 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

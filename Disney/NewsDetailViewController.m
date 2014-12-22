@@ -70,6 +70,10 @@
 -(void)backClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"0" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
+
 }
 
 

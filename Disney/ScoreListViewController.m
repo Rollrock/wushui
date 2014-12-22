@@ -63,7 +63,7 @@
     UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
     lab.text = @"我要评分";
     lab.textColor = [UIColor whiteColor];
-    
+    lab.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = lab;
 }
 
@@ -191,6 +191,11 @@
     vc.info = info;
     
     [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"1" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
+
 }
 
 

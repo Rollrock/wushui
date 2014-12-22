@@ -92,7 +92,7 @@
     UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
     lab.text = @"富阳五水共治";
     lab.textColor = [UIColor whiteColor];
-    
+    lab.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = lab;
 }
 

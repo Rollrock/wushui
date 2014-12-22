@@ -10,6 +10,7 @@
 #import "ASIFormDataRequest.h"
 #import "AppDelegate.h"
 #import "UIImageView+WebCache.h"
+#import "SVProgressHUD.h"
 
 @interface ScoreDetailViewController ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
@@ -23,6 +24,8 @@
     NSString * _score;
     
     UIScrollView * _scrView;
+    
+    UIPickerView *_pickView;
 }
 @end
 
@@ -39,7 +42,7 @@
     
     _scoreArray = [[NSArray alloc]initWithObjects:@"0分", @"1分",@"2分",@"3分",@"4分",@"5分",@"6分",@"7分",@"8分",@"9分",@"10分",nil];
     
-    _score = @"0分";
+    _score = @"0";
     
     [self layoutView:_info];
     
@@ -101,18 +104,29 @@
             
             NSString * status = [[subDict objectForKey:@"infor"] objectForKey:@"status"];
             NSString * backward = [[subDict objectForKey:@"infor"] objectForKey:@"backward"];
+            NSString * score = [[subDict objectForKey:@"infor"] objectForKey:@"score"];
             
-            NSArray * imgUrlArray = [subDict objectForKey:@"images"];
+            NSArray * tempArray = [subDict objectForKey:@"images"];
+            NSMutableArray * imgArray = [[[NSMutableArray alloc]initWithCapacity:1]autorelease];
+            
+            
+            for( NSDictionary * dd in  tempArray )
+            {
+                if( [dd isKindOfClass:[NSDictionary class]])
+                {
+                    [imgArray addObject:[dd objectForKey:@"image"]];
+                }
+            }
             
             if( [status isEqualToString:@"0"] )
             {
                 backward = @"未处理";
             }
-            
+
             //test
             //NSMutableArray * array = [[[ NSMutableArray alloc]initWithObjects:@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg",@"http://img1.cache.netease.com/ent/2014/12/4/20141204200009bdbd3.jpg", nil]autorelease];
             //
-            [self layoutRespView:status withBackward:backward withImgUrlArray:imgUrlArray];
+            [self layoutRespView:status withBackward:backward withImgUrlArray:imgArray withScore:score];
             
         }
     }
@@ -127,12 +141,48 @@
         NSString * strCode = [[dict objectForKey:@"common"] objectForKey:@"respCode"];
         
         NSLog(@"strCode:%@ ",strCode);
+        
+        if( [strCode isEqualToString:@"00000" ] )
+        {
+            [self showTip:@"举报成功"];
+        }
+        else
+        {
+            [self showTip:@"举报失败"];
+        }
 
     }
 }
 
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    if( request == _scoreReq )
+    {
+        [self showTip:@"举报失败"];
+    }
+}
 
--(void)layoutRespView:(NSString*)status withBackward:(NSString*)backward withImgUrlArray:(NSArray*)array
+
+-(void)showTip:(NSString*)str
+{
+    [SVProgressHUD showWithStatus:str];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
+        
+        sleep(1.5f);
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            
+            [SVProgressHUD dismiss];
+        });
+        
+    });
+}
+
+
+
+
+-(void)layoutRespView:(NSString*)status withBackward:(NSString*)backward withImgUrlArray:(NSArray*)array withScore:(NSString*)score
 {
     CGRect rect;
     //
@@ -201,6 +251,8 @@
             pickView.backgroundColor = [UIColor lightGrayColor];
             
             [_scrView addSubview:pickView];
+            
+            _pickView = pickView;
 
         }
         
@@ -221,6 +273,19 @@
             btnScore.enabled = NO;
         }
         
+        if( score.length >= 2 )
+        {
+            btnScore.hidden = YES;
+            
+             int s = [score integerValue];
+            
+            if( s >= 0 && s <= 10 )
+            {
+                [_pickView selectRow:s inComponent:0 animated:NO];
+                _pickView.userInteractionEnabled =NO;
+            }
+        }
+        
     }
     _scrView.contentSize = CGSizeMake(320, downYPos+200);
 }
@@ -229,6 +294,9 @@
 -(void)scoreClick
 {
     AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    _scoreReq = nil;
+    [_scoreReq release];
     
     _scoreReq = [[ASIFormDataRequest alloc]initWithURL:[NSURL URLWithString:@"http://115.159.30.191/water/json?"]];
     [_scoreReq setPostValue:appDel.userId forKey:@"userId"];
@@ -264,20 +332,23 @@
 {
     NSLog(@"selected:%@",[_scoreArray objectAtIndex:row]);
     
-    _score = [_scoreArray objectAtIndex:row];
+     _score = nil;
+    [_score release];
+    
+    _score = [[NSString stringWithFormat:@"%d",row]retain];
 }
 
 
 
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSLog(@"requestFailed:%@",request.error);
-}
 
 
 -(void)backClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"0" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
+
 }
 
 

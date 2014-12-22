@@ -90,12 +90,13 @@
 
 -(void)layoutTitleView
 {
-    CGRect rect = CGRectMake(0, 0, 100, 30);
+    CGRect rect = CGRectMake(20, 0, 100, 30);
     
     UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
     lab.text = @"富阳视点";
     lab.textColor = [UIColor whiteColor];
-    
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = lab;
 }
 
@@ -236,6 +237,10 @@
     vc.newsid = ((NewsListInfo*)[_newsArray objectAtIndex:indexPath.row]).newsid;
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"1" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
+
 }
 
 

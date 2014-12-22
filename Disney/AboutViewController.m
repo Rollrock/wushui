@@ -41,6 +41,14 @@
         
     }
     
+    {
+        CGRect rect = CGRectMake(0, 0, 50, 30);
+        UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
+        lab.text = @"关于软件";
+        lab.textColor = [UIColor whiteColor];
+        lab.textAlignment = NSTextAlignmentCenter;
+        self.navigationItem.titleView = lab;
+    }
     
     [self layoutBaseView];
     
@@ -53,8 +61,6 @@
 
 -(void)startRequest
 {
-    AppDelegate * appDel = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    
     _dataReq = [[ASIFormDataRequest alloc]initWithURL:[NSURL URLWithString:@"http://115.159.30.191/water/json?"]];
     
     [_dataReq setPostValue:@"MB" forKey: @"channal"];
@@ -94,9 +100,7 @@
                 NSString * copyRight = [subDict objectForKey:@"copyright"];
                 NSString * support = [subDict objectForKey:@"support"];
                 
-                
                 [self layoutView:body withCopyRight:copyRight withSupport:support];
-                
             }
             
         }
@@ -171,17 +175,10 @@
     yPos += 20+120+ 20;
     rect = CGRectMake(10, yPos, frame.size.width-10*2, 0);
     
-    UITextView * textView = [[UITextView alloc]initWithFrame:rect];
-    textView.text = @"阿斯顿激发健身房 阿里山的减肥；啊解释地方 爱上了对方就阿里山的减肥； 啊；速度了激发；楼上的减肥；啊阿萨德来激发了设计费；阿斯顿减肥";//strBody;
+    UITextView * textView = [[[UITextView alloc]initWithFrame:rect]autorelease];
+    textView.text = strBody;// @"阿斯顿激发健身房 阿里山的减肥；啊解释地方 爱上了对方就阿里山的减肥； 啊；速度了激发；楼上的减肥；啊阿萨德来激发了设计费；阿斯顿减肥";//strBody;
     textView.font = [UIFont systemFontOfSize:15];
-    
-    
-    //textView.frame = CGRectMake(10, yPos, frame.size.width-10*2, textView.contentSize.height);
-    /*
-    CGSize newSize = [textView.text sizeWithFont:[UIFont systemFontOfSize:15]
-                               constrainedToSize:CGSizeMake(frame.size.width-10*2,9999)
-                                   lineBreakMode:NSLineBreakByWordWrapping];
-     */
+    textView.editable = NO;
     
     CGSize textViewSize = [textView sizeThatFits:CGSizeMake(textView.frame.size.width, FLT_MAX)];
 
@@ -252,6 +249,9 @@
 -(void)backClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"0" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
 }
 
 

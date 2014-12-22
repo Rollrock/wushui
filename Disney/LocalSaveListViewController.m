@@ -71,6 +71,7 @@
         UILabel * lab = [[[UILabel alloc]initWithFrame:rect]autorelease];
         lab.text = @"本地保存列表";
         lab.textColor = [UIColor whiteColor];
+        lab.textAlignment = NSTextAlignmentCenter;
         self.navigationItem.titleView = lab;
     }
     
@@ -81,6 +82,10 @@
 -(void)backClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:@"0" forKey:HIDE_TAB_BAR_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
+
 }
 
 -(void)layoutView
@@ -331,7 +336,7 @@
 {
     [SVProgressHUD dismiss];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self backClicked];
 }
 
 

@@ -1,8 +1,6 @@
 #import <Foundation/Foundation.h>
 
 
-
-
 typedef enum
 {
   SCORE_CELL_VIEW_LOCAL_SAVE,
@@ -43,6 +41,10 @@ typedef enum
 
 
 #define SCORE_LIST_REFRESH  @"score_list_refresh"
+
+
+#define HIDE_TAB_BAR_NAME  @"hideTabbar"
+#define HIDE_TAB_BAR_KEY  @"hide"
 
 //////////////////////////////////////////////////////////////////
 @interface NewsListInfo : NSObject

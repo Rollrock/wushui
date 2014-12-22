@@ -144,7 +144,7 @@
             UIButton * btn = [[[UIButton alloc]initWithFrame:rect]autorelease];
             btn.layer.cornerRadius = 7;
             btn.layer.masksToBounds = YES;
-            [btn setBackgroundImage:[UIImage imageNamed:@"report_now"] forState:UIControlStateNormal];
+            [btn setBackgroundImage:[UIImage imageNamed:@"local_report"] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(reportClicked) forControlEvents:UIControlEventTouchUpInside];
             
             [bgView addSubview:btn];
