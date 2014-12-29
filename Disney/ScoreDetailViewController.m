@@ -128,6 +128,9 @@
             //
             [self layoutRespView:status withBackward:backward withImgUrlArray:imgArray withScore:score];
             
+            
+            [_dataReq release];
+            _dataReq = nil;
         }
     }
     else if( request == _scoreReq )
@@ -150,7 +153,9 @@
         {
             [self showTip:@"举报失败"];
         }
-
+        
+        [_scoreReq release];
+        _scoreReq = nil;
     }
 }
 
@@ -159,6 +164,14 @@
     if( request == _scoreReq )
     {
         [self showTip:@"举报失败"];
+        
+        [_scoreReq release];
+        _scoreReq = nil;
+    }
+    else if ( request == _dataReq )
+    {
+        [_dataReq release];
+        _dataReq = nil;
     }
 }
 
@@ -424,6 +437,15 @@
     
     //
     
+}
+
+
+-(void)dealloc
+{
+    
+    [_scrView release];
+    
+    [super dealloc];
 }
 
 

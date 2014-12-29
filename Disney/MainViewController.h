@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "tabbarView.h"
-#import "FirstViewController.h"
+#import "RptViewController.h"
 #import "ScoreListViewController.h"
-#import "ThirdViewController.h"
+#import "NewsViewController.h"
 
 
 @interface MainViewController : UIViewController
 {
     tabbarView * _tabbarView;
     
-    FirstViewController * _firstViewC;
+    RptViewController * _firstViewC;
     ScoreListViewController * _secondViewC;
-    ThirdViewController * _thirdViewC;
+    NewsViewController * _thirdViewC;
     
     UINavigationController * _firstNav;
     UINavigationController * _secondNav;

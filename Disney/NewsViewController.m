@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 zhuang chaoxiao. All rights reserved.
 //
 
-#import "ThirdViewController.h"
+#import "NewsViewController.h"
 #import "NewListCell.h"
 #import "JSONKit.h"
 #import "ASIFormDataRequest.h"
@@ -20,7 +20,7 @@
 #define STR_URL  @"http://115.159.30.191/water/json?"
 
 
-@interface ThirdViewController ()<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate>
+@interface NewsViewController ()<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate>
 {
     NSMutableArray * _newsArray;
     
@@ -35,7 +35,7 @@
 
 @end
 
-@implementation ThirdViewController
+@implementation NewsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

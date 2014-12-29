@@ -328,6 +328,9 @@
                 });
             });
         }
+        
+        [_dataReq release];
+        _dataReq = nil;
     }
 }
 
@@ -344,18 +347,25 @@
 {
     NSLog(@"requestFailed:%@",request.error);
     
-    
-    [SVProgressHUD showWithStatus:@"举报失败，请重新尝试"];
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
+    if( _dataReq == request )
+    {
         
-        sleep(1.5f);
+        [SVProgressHUD showWithStatus:@"举报失败，请重新尝试"];
         
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
             
-            [SVProgressHUD dismiss];
+            sleep(1.5f);
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                
+                [SVProgressHUD dismiss];
+            });
         });
-    });
+        
+        [_dataReq release];
+        _dataReq = nil;
+    }
+    
 }
 
 
@@ -403,6 +413,19 @@
     [super viewWillDisappear:animated];
 }
 
+
+-(void)dealloc
+{
+    [_tabView release];
+    
+    [_mutArray removeAllObjects];
+    [_mutArray release];
+    
+    [_storeArray removeAllObjects];
+    [_storeArray release];
+    
+    [super dealloc];
+}
 
 
 - (void)didReceiveMemoryWarning

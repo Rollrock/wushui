@@ -103,9 +103,9 @@
 		48CB85BD183855E30027B9F0 /* MyWaitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 48CB85BC183855E30027B9F0 /* MyWaitView.m */; };
 		48CB85BF183856B90027B9F0 /* bg_wait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48CB85BE183856B90027B9F0 /* bg_wait@2x.png */; };
 		48D1D97C18A7B3F800719AE3 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E67202183A3AA30061B2C0 /* AdSupport.framework */; };
-		48E07E4218195F8700CDA0CC /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E4118195F8700CDA0CC /* FirstViewController.m */; };
+		48E07E4218195F8700CDA0CC /* RptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E4118195F8700CDA0CC /* RptViewController.m */; };
 		48E07E4518195FA900CDA0CC /* ScoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E4418195FA900CDA0CC /* ScoreListViewController.m */; };
-		48E07E4B181A945A00CDA0CC /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E4A181A945A00CDA0CC /* ThirdViewController.m */; };
+		48E07E4B181A945A00CDA0CC /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E4A181A945A00CDA0CC /* NewsViewController.m */; };
 		48E07E51181A9EBF00CDA0CC /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E50181A9EBF00CDA0CC /* NewsDetailViewController.m */; };
 		48E07E57181BF9FC00CDA0CC /* NewListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 48E07E56181BF9FC00CDA0CC /* NewListCell.m */; };
 		48E5013E182125A600C904DB /* about_connect_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 48E5013D182125A600C904DB /* about_connect_bg.png */; };
@@ -269,12 +269,12 @@
 		48CB85BB183855E20027B9F0 /* MyWaitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWaitView.h; sourceTree = "<group>"; };
 		48CB85BC183855E30027B9F0 /* MyWaitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWaitView.m; sourceTree = "<group>"; };
 		48CB85BE183856B90027B9F0 /* bg_wait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_wait@2x.png"; sourceTree = "<group>"; };
-		48E07E4018195F8700CDA0CC /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		48E07E4118195F8700CDA0CC /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		48E07E4018195F8700CDA0CC /* RptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RptViewController.h; sourceTree = "<group>"; };
+		48E07E4118195F8700CDA0CC /* RptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RptViewController.m; sourceTree = "<group>"; };
 		48E07E4318195FA900CDA0CC /* ScoreListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreListViewController.h; sourceTree = "<group>"; };
 		48E07E4418195FA900CDA0CC /* ScoreListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreListViewController.m; sourceTree = "<group>"; };
-		48E07E49181A945A00CDA0CC /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
-		48E07E4A181A945A00CDA0CC /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		48E07E49181A945A00CDA0CC /* NewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
+		48E07E4A181A945A00CDA0CC /* NewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 		48E07E4F181A9EBF00CDA0CC /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailViewController.h; sourceTree = "<group>"; };
 		48E07E50181A9EBF00CDA0CC /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailViewController.m; sourceTree = "<group>"; };
 		48E07E55181BF9FC00CDA0CC /* NewListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewListCell.h; sourceTree = "<group>"; };
@@ -677,8 +677,8 @@
 				48E07E56181BF9FC00CDA0CC /* NewListCell.m */,
 				48E07E4F181A9EBF00CDA0CC /* NewsDetailViewController.h */,
 				48E07E50181A9EBF00CDA0CC /* NewsDetailViewController.m */,
-				48E07E49181A945A00CDA0CC /* ThirdViewController.h */,
-				48E07E4A181A945A00CDA0CC /* ThirdViewController.m */,
+				48E07E49181A945A00CDA0CC /* NewsViewController.h */,
+				48E07E4A181A945A00CDA0CC /* NewsViewController.m */,
 			);
 			name = ThirdViewController;
 			sourceTree = "<group>";
@@ -718,8 +718,8 @@
 		48E07E54181BF9A700CDA0CC /* FirstViewController */ = {
 			isa = PBXGroup;
 			children = (
-				48E07E4018195F8700CDA0CC /* FirstViewController.h */,
-				48E07E4118195F8700CDA0CC /* FirstViewController.m */,
+				48E07E4018195F8700CDA0CC /* RptViewController.h */,
+				48E07E4118195F8700CDA0CC /* RptViewController.m */,
 				48ACDD791A32069A00DC4284 /* AboutViewController.h */,
 				48ACDD7A1A32069A00DC4284 /* AboutViewController.m */,
 				484551AA1A2DE910009E4947 /* LocalSaveListViewController.h */,
@@ -931,9 +931,9 @@
 				4815340C1A3886150066A7ED /* SVProgressHUD.m in Sources */,
 				480D913B18156496005E30C6 /* MainViewController.m in Sources */,
 				480D91671816AA69005E30C6 /* tabbarView.m in Sources */,
-				48E07E4218195F8700CDA0CC /* FirstViewController.m in Sources */,
+				48E07E4218195F8700CDA0CC /* RptViewController.m in Sources */,
 				48E07E4518195FA900CDA0CC /* ScoreListViewController.m in Sources */,
-				48E07E4B181A945A00CDA0CC /* ThirdViewController.m in Sources */,
+				48E07E4B181A945A00CDA0CC /* NewsViewController.m in Sources */,
 				48E07E51181A9EBF00CDA0CC /* NewsDetailViewController.m in Sources */,
 				48E07E57181BF9FC00CDA0CC /* NewListCell.m in Sources */,
 				485B2EA8181D456500F70FD7 /* JSONKit.m in Sources */,

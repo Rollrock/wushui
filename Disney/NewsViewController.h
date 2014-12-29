@@ -10,11 +10,9 @@
 #import "NewsDetailViewController.h"
 #import "dataStruct.h"
 
-@interface FirstViewController : UIViewController
+@interface NewsViewController : UIViewController
 {
-    UIScrollView * _scrView;
-    NSMutableData * _data;
-    NSURLConnection * _conn;
+    UITableView * _tabView;
 }
 
 @end

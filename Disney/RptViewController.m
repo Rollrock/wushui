@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 zhuang chaoxiao. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "RptViewController.h"
 #import "JSONKit.h"
 #import "SDWebImageManager.h"
 #import "dataStruct.h"
@@ -17,16 +17,18 @@
 #import "BMKGeometry.h"
 
 
-@interface FirstViewController ()<BMKMapViewDelegate>
+@interface RptViewController ()<BMKMapViewDelegate>
 {
     UIImageView * _bigImgView;
    
     BMKMapView * _mapView;
+    
+    UIScrollView * _scrView;
 }
 
 @end
 
-@implementation FirstViewController
+@implementation RptViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -140,7 +142,6 @@
     BMKPointAnnotation *ann = [[[BMKPointAnnotation alloc]init]autorelease];
     ann.coordinate = baiduCoor;
     ann.title = @"当前位置";
-    //ann.subtitle = @"上海市浦东新区益江路516弄28幢";
     
     [_mapView addAnnotation:ann];
     [_mapView selectAnnotation:ann animated:YES];
@@ -206,6 +207,8 @@
 {
     [_scrView release];
     
+    
+
     [super dealloc];
 }
 

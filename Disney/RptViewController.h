@@ -10,9 +10,9 @@
 #import "NewsDetailViewController.h"
 #import "dataStruct.h"
 
-@interface ThirdViewController : UIViewController
+@interface RptViewController : UIViewController
 {
-    UITableView * _tabView;
+   
 }
 
 @end

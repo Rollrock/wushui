@@ -1000,6 +1000,39 @@
 }
 
 
+-(void)dealloc
+{
+    [_scrView release];
+    
+    [_addrArray removeAllObjects];
+    [_addrArray release];
+    
+    [_addTextView release];
+    [_descTextView release];
+    [_nameTextView release];
+    [_phoneTextView release];
+   
+    
+    [_photoViewArray removeAllObjects];
+    [_photoViewArray release];
+    
+    [_photoSmallDelArray removeAllObjects];
+    [_photoSmallDelArray release];
+    
+    [_photoViewFlagArray removeAllObjects];
+    [_photoViewFlagArray release];
+    
+    
+    [_scoreArray removeAllObjects];
+    [_scoreArray release];
+    
+    
+    [_pickView release];
+
+    
+    [super dealloc];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

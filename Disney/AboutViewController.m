@@ -104,6 +104,9 @@
             }
             
         }
+        
+        [_dataReq release];
+        _dataReq = nil;
     }
     
 }
@@ -254,6 +257,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_TAB_BAR_NAME object:nil userInfo:dict];
 }
 
+
+-(void)dealloc
+{
+    
+    [_scrView release];
+    
+    
+    [super dealloc];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

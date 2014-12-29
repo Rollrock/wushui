@@ -204,6 +204,19 @@
     return 200.0;
 }
 
+-(void)dealloc
+{
+    
+    [_tabView release];
+    
+    [_mutArray removeAllObjects];
+    [_mutArray release];
+    
+    [_storeArray removeAllObjects];
+    [_storeArray release];
+    
+    [super dealloc];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -638,7 +638,7 @@
 
 -(void)initSubViewController
 {
-    _firstViewC = [[FirstViewController alloc]initWithNibName:nil bundle:nil];
+    _firstViewC = [[RptViewController alloc]initWithNibName:nil bundle:nil];
     _firstNav = [[UINavigationController alloc]init];
     
     if( DEVICE_VER_OVER_7 == NO )
@@ -669,7 +669,7 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
 
-    _thirdViewC = [[ThirdViewController alloc]initWithNibName:nil bundle:nil];
+    _thirdViewC = [[NewsViewController alloc]initWithNibName:nil bundle:nil];
     _thirdNav = [[UINavigationController alloc]init];
     [_thirdNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
 
