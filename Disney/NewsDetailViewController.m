@@ -106,7 +106,6 @@
         
         if( [dict isKindOfClass:[NSDictionary class]] )
         {
-            
             NSDictionary * subDict = [[dict objectForKey:@"content"] objectForKey:@"infor"];
             
             NSString * strTitle = [subDict objectForKey:@"title"];
@@ -118,8 +117,10 @@
             NSLog(@"title:%@  time:%@ source:%@ body:%@",strTitle,strTime,strSource,strBody);
             
             [self laytouView:strTitle withTime:strTime withSource:strSource withBody:strBody];
-            
         }
+        
+        [_dataReq release];
+        _dataReq = nil;
     }
     else
     {
@@ -132,7 +133,8 @@
     
     if(request == _dataReq)
     {
-        
+        [_dataReq release];
+        _dataReq = nil;
     }
 }
 

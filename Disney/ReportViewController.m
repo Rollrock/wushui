@@ -32,7 +32,6 @@
     
     NSMutableArray * _photoViewArray;
     NSMutableArray * _photoSmallDelArray;
-    NSMutableArray * _photoViewFlagArray;
     
     ASIFormDataRequest * _dataReq;
     ASIFormDataRequest * _townReq;
@@ -214,7 +213,6 @@
         _pickView.backgroundColor = [self commonBackColor];//[UIColor lightGrayColor];
         
         [_scrView addSubview:_pickView];
-        [_pickView release];
         
         yPos += _pickView.frame.size.height + 15;
     }
@@ -609,7 +607,7 @@
     //
     _scoreDef = nil;
     [_scoreArray removeAllObjects];
-    _scoreArray = nil;
+    [_scoreArray  release];
     
     
     _scoreDef = [NSUserDefaults standardUserDefaults];
@@ -1002,7 +1000,6 @@
 
 -(void)dealloc
 {
-    [_scrView release];
     
     [_addrArray removeAllObjects];
     [_addrArray release];
@@ -1019,8 +1016,6 @@
     [_photoSmallDelArray removeAllObjects];
     [_photoSmallDelArray release];
     
-    [_photoViewFlagArray removeAllObjects];
-    [_photoViewFlagArray release];
     
     
     [_scoreArray removeAllObjects];
@@ -1028,6 +1023,8 @@
     
     
     [_pickView release];
+    
+    [_scrView release];
 
     
     [super dealloc];

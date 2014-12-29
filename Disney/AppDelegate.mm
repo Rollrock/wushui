@@ -123,6 +123,7 @@
     _mapManager = [[BMKMapManager alloc]init];
     
     BOOL ret = [_mapManager start:@"QizVEFjwgndlYN74q2yPdmnY" generalDelegate:self];
+    
     NSLog(@"ret:%d",ret);
     
     self.mainViewController = [[[MainViewController alloc]initWithNibName:nil bundle:nil]autorelease];
