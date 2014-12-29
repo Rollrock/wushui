@@ -225,7 +225,12 @@
 -(void)showAdvView:(NSString*)imgUrl
 {
     #define ADV_HEIGHT   50
-
+    
+    if( imgUrl.length < 4 )
+    {
+        return;
+    }
+    
     
     CGRect rect = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height*2, 320, ADV_HEIGHT);
     
@@ -524,12 +529,6 @@
 {
     NSArray *menuItems =
     @[
-      /*
-      [KxMenuItem menuItem:@"举报"
-                     image:nil
-                    target:nil
-                    action:NULL],
-      */
       
       [KxMenuItem menuItem:@"我要举报"
                      image:nil//[UIImage imageNamed:@"action_icon"]
@@ -555,12 +554,6 @@
 {
     NSArray *menuItems =
     @[
-      /*
-      [KxMenuItem menuItem:@"菜单"
-                     image:nil
-                    target:nil
-                    action:NULL],
-      */
       
       [KxMenuItem menuItem:@"关于软件"
                      image:[UIImage imageNamed:@"action_icon"]
@@ -621,7 +614,6 @@
 
 -(void)layoutFirstNavEx
 {
-    
     [_firstNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     
     UIButton * leftBtn = [[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 35, 25)]autorelease];
@@ -659,8 +651,7 @@
    
     [_firstNav pushViewController:_firstViewC animated:NO];
     //
-    
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
     _secondViewC = [[ScoreListViewController alloc]initWithNibName:nil bundle:nil];
@@ -693,7 +684,6 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
 }
-
 
 
 -(void)tabClickIndex:(NSInteger)index

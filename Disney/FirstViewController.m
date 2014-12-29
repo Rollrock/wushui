@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "BMKPointAnnotation.h"
 #import "SVProgressHUD.h"
+#import "BMKGeometry.h"
 
 
 @interface FirstViewController ()<BMKMapViewDelegate>
@@ -130,11 +131,14 @@
     location.latitude = appDel.latitude;
     location.longitude = appDel.longitude;
     
-    [_mapView setCenterCoordinate:location animated:YES];
+    
+    NSDictionary *dict = BMKConvertBaiduCoorFrom(location,BMK_COORDTYPE_GPS);
+    CLLocationCoordinate2D baiduCoor = BMKCoorDictionaryDecode(dict);
+    [_mapView setCenterCoordinate:baiduCoor animated:YES];
     
     
     BMKPointAnnotation *ann = [[[BMKPointAnnotation alloc]init]autorelease];
-    ann.coordinate = location;
+    ann.coordinate = baiduCoor;
     ann.title = @"当前位置";
     //ann.subtitle = @"上海市浦东新区益江路516弄28幢";
     
